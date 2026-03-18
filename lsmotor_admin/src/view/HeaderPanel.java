@@ -222,11 +222,4 @@ public class HeaderPanel extends JPanel {
         return rond;
     }
 
-    // ─────────────────────────────────────────────────────────
-    //  MÉTHODE DE MISE À JOUR
-    // ─────────────────────────────────────────────────────────
-
-    /**
-     * Met à jour le nom et l'avatar affichés dans le header.
-     * Utile si l'admin change de compte sans redémarrer l'app.
-     * @param pr
+}

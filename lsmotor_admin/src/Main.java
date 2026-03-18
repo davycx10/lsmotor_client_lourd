@@ -1,5 +1,11 @@
+import com.mysql.cj.jdbc.Driver;
 import model.BDD;
 import view.LoginView;
+import controller.LoginController;
+
+import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
+import java.sql.*;
 
 /**
  * ============================================================
@@ -56,9 +62,45 @@ import view.LoginView;
  *
  * ============================================================
  */
+
 public class Main {
 
-    // Étape 1 : 4 constantes de connexion BDD
+    // Paramètres de connexion BDD — à modifier selon la config
+    public static final String SERVEUR = "localhost";
+    public static final String USER    = "root";
+    public static final String MDP     = "";
+    public static final String BDD_NOM = "ls_motors";
 
-    // Étape 2-5 : méthode main avec invokeLater
+    public static void main(String[] args) {
+
+        // lancement Swing dans le thread EDT
+        SwingUtilities.invokeLater(() -> {
+
+            // 1. Créer la connexion BDD
+            BDD db = new BDD(SERVEUR, USER, MDP, BDD_NOM);
+            db.seConnecter();
+
+            // 2. Vérifier que la connexion a réussi
+            if (db.getMaConnexion() == null) {
+                JOptionPane.showMessageDialog(
+                        null,
+                        "Impossible de se connecter à la BDD.\n"
+                                + "Vérifiez les paramètres dans Main.java",
+                        "Erreur BDD",
+                        JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            // 3. Créer la vue de login
+            LoginView loginView = new LoginView();
+
+            // 4. Créer le controller
+            // new LoginController(db, loginView);
+
+            // 5. Afficher la fenêtre
+            loginView.setVisible(true);
+        });
+    }
+
 }
