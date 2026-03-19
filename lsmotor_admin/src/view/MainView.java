@@ -1,7 +1,8 @@
 package view;
 
 import model.BDD;
-import model.Utilisateur;
+import model.POJOs.Utilisateur;
+import model.UtilisateurModel;
 
 import javax.swing.*;
 import java.awt.*;

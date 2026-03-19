@@ -1,4 +1,3 @@
-import com.mysql.cj.jdbc.Driver;
 import model.BDD;
 import view.LoginView;
 import controller.LoginController;
