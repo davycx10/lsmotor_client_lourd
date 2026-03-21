@@ -120,31 +120,72 @@ package model.POJOs;
  *                     utilise Config
  *                     pour transporter
  *                     les données)
- *
+ //*
  * ============================================================
  */
 public class Config {
 
     // Étape 1 : 3 attributs privés
-    // → private int    id;
-    // → private double margePourcent;
-    // → private String dateMaj;
+
+    private int id;
+    private  double margePourcent;
+    private String dateMaj;
 
     // Étape 2 : constructeur vide
+    public Config(){}
 
     // Étape 3 : constructeur complet
     // → (int id, double margePourcent, String dateMaj)
-
+    public Config (
+            int id,
+            double margePourcent,
+            String dateMaj
+    ){
+        this.id            = id;
+        this.margePourcent = margePourcent;
+        this.dateMaj       = dateMaj;
+    }
+    
     // Étape 4 : 3 getters
-    // → getId()
-    // → getMargePourcent()
-    // → getDateMaj()
+
+    public int getId() {
+        return id;
+    }
+
+    public double getMargePourcent() {
+        return margePourcent;
+    }
+
+    public String getDateMaj() {
+        return dateMaj;
+    }
 
     // Étape 5 : 3 setters
     // → setId(int id)
     // → setMargePourcent(double marge)
     // → setDateMaj(String dateMaj)
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setMargePourcent(double margePourcent) {
+        this.margePourcent = margePourcent;
+    }
+
+    public void setDateMaj(String dateMaj) {
+        this.dateMaj = dateMaj;
+    }
     // Étape 6 : toString()
     // → Affiche id, margePourcent, dateMaj
+
+
+    @Override
+    public String toString() {
+        return "Config{" +
+                "id=" + id +
+                ", margePourcent=" + margePourcent +
+                ", dateMaj='" + dateMaj + '\'' +
+                '}';
+    }
 }

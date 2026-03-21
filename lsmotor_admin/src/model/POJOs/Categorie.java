@@ -1,4 +1,4 @@
-package model;
+package model.POJOs;
 
 /**
  * ============================================================
@@ -105,22 +105,52 @@ public class Categorie {
 
     // Étape 1 : 2 attributs privés
     // ⚠️ "libelle" et non "nom"
+    private int id;
+    private String libelle;
 
     // Étape 2 : constructeur vide
+    public Categorie(){}
 
     // Étape 3 : constructeur (int id, String libelle)
+    public Categorie(
+            int id,
+            String libelle
+    ){
+        this.id = id;
+        this.libelle = libelle;
+    }
 
     // Étape 4 : getter getId()
 
+    public int getId() {
+        return id;
+    }
+
+
     // Étape 5 : getter getLibelle()
-    // ⚠️ getLibelle() et non getNom()
+    public String getLibelle() {
+        return libelle;
+    }
 
     // Étape 6 : setter setId()
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     // Étape 7 : setter setLibelle()
-    // ⚠️ setLibelle() et non setNom()
+
+    public void setLibelle(String libelle) {
+        this.libelle = libelle;
+    }
+
 
     // Étape 8 : toString() → return this.libelle;
-    // ⚠️ Seulement "return this.libelle;" rien d'autre !
 
+    @Override
+    public String toString() {
+        return "Categorie{" +
+                "libelle='" + libelle + '\'' +
+                '}';
+    }
 }

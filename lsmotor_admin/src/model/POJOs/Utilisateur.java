@@ -69,7 +69,6 @@ public class Utilisateur {
     private String discordPseudo;
     private String dateInscription;
 
-
     // Étape 2 : écris ton constructeur vide ici
     public Utilisateur (){
 
@@ -99,34 +98,42 @@ public class Utilisateur {
     // Étape 4 : écris tes getters ici
 
     public int getId() {
+
         return id;
     }
 
     public String getNom() {
+
         return nom;
     }
 
     public String getPrenom() {
+
         return prenom;
     }
 
     public String getEmail() {
+
         return email;
     }
 
     public String getPasswrd() {
+
         return passwrd;
     }
 
     public String getRole() {
+
         return role;
     }
 
     public String getDiscordPseudo() {
+
         return discordPseudo;
     }
 
     public String getDateInscription() {
+
         return dateInscription;
     }
 
@@ -137,14 +144,17 @@ public class Utilisateur {
     }
 
     public void setNom(String nom) {
+
         this.nom = nom;
     }
 
     public void setPrenom(String prenom) {
+
         this.prenom = prenom;
     }
 
     public void setEmail(String email) {
+
         this.email = email;
     }
 
@@ -153,14 +163,17 @@ public class Utilisateur {
     }
 
     public void setRole(String role) {
+
         this.role = role;
     }
 
     public void setDiscordPseudo(String discordPseudo) {
+
         this.discordPseudo = discordPseudo;
     }
 
     public void setDateInscription(String dateInscription) {
+
         this.dateInscription = dateInscription;
     }
 

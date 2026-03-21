@@ -1,7 +1,7 @@
 package controller;
 
 import model.BDD;
-import model.Categorie;
+import model.POJOs.Categorie;
 import model.CategorieModel;
 import view.CategoriePanel;
 
