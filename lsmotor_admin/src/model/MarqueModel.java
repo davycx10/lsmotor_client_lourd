@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.*;
-import model.POJOs.Utilisateur;
 import model.POJOs.Marque;
 import java.util.ArrayList;
 import java.util.List;
@@ -307,7 +306,7 @@ public class MarqueModel {
     public boolean modifier(int id, String nom) {
         try {
             PreparedStatement ps;
-            String sql = "UPDATE nom" +
+            String sql = "UPDATE marque" +
                     "SET Nom=?" + "WHERE ID=?";
             ps = uneDb.getMaConnexion().prepareStatement(sql);
             ps.setString(1, nom);
@@ -348,7 +347,7 @@ public class MarqueModel {
     // → SELECT COUNT(*) FROM vehicule WHERE ID_Marque=?
     
     public boolean estUtilisee(int id){
-        String sql = "SELECT COUNT (*) " +
+        String sql = "SELECT COUNT(*) " +
                 "FROM vehicule " + "WHERE ID_Marque=?";
         try {
             PreparedStatement ps =
@@ -356,7 +355,9 @@ public class MarqueModel {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1) > 0;
+                boolean resultat = rs.getInt(1) > 0;
+                ps.close();
+                return resultat;
             }
             ps.close();
             

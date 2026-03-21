@@ -80,6 +80,7 @@ public class Vehicule {
     private int id;
     private String nomModele;
     private int idMarque;
+    private int idCategorie;
     private double prixCatalogue;
     private String description;
     private String image;
@@ -95,6 +96,7 @@ public class Vehicule {
             int id,
             String nomModele,
             int idMarque,
+            int idCategorie,
             double prixCatalogue,
             String description,
             String image,
@@ -102,15 +104,16 @@ public class Vehicule {
             String nomMarque,
             String nomCategorie
     ){
-        this.id = id;
-        this.nomModele = nomModele;
-        this.idMarque = idMarque;
+        this.id            = id;
+        this.nomModele     = nomModele;
+        this.idMarque      = idMarque;
+        this.idCategorie   = idCategorie;
         this.prixCatalogue = prixCatalogue;
-        this.description = description;
-        this.image = image;
-        this.actif = actif;
-        this.nomMarque = nomMarque;
-        this.nomCategorie = nomCategorie;
+        this.description   = description;
+        this.image         = image;
+        this.actif         = actif;
+        this.nomMarque     = nomMarque;
+        this.nomCategorie  = nomCategorie;
     }
 
     // Étape 4 : getters
@@ -125,6 +128,10 @@ public class Vehicule {
 
     public int getIdMarque() {
         return idMarque;
+    }
+
+    public int getIdCategorie() {
+        return idCategorie;
     }
 
     public double getPrixCatalogue() {
@@ -150,6 +157,7 @@ public class Vehicule {
     public String getNomCategorie() {
         return nomCategorie;
     }
+
     // Étape 5 : setters
 
     public void setId(int id) {
@@ -162,6 +170,10 @@ public class Vehicule {
 
     public void setIdMarque(int idMarque) {
         this.idMarque = idMarque;
+    }
+
+    public void setIdCategorie(int idCategorie) {
+        this.idCategorie = idCategorie;
     }
 
     public void setPrixCatalogue(double prixCatalogue) {
@@ -196,6 +208,7 @@ public class Vehicule {
                 "id=" + id +
                 ", nomModele='" + nomModele + '\'' +
                 ", idMarque=" + idMarque +
+                ", idCategorie=" + idCategorie +
                 ", prixCatalogue=" + prixCatalogue +
                 ", description='" + description + '\'' +
                 ", image='" + image + '\'' +
