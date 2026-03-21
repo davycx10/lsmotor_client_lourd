@@ -1,7 +1,7 @@
 package controller;
 
 import model.BDD;
-import model.Marque;
+import model.POJOs.Marque;
 import model.MarqueModel;
 import view.MarquePanel;
 

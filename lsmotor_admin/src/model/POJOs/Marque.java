@@ -1,4 +1,4 @@
-package model;
+package model.POJOs;
 
 /**
  * ============================================================
@@ -78,19 +78,54 @@ package model;
 public class Marque {
 
     // Étape 1 : 2 attributs privés (id et nom)
+    private int id;
+    private String nom;
 
     // Étape 2 : constructeur vide
+    public Marque(){
+
+    }
 
     // Étape 3 : constructeur (int id, String nom)
+    public Marque(
+            int id,
+            String nom
+    ){
+        this.id = id;
+        this.nom = nom;
+    }
 
     // Étape 4 : getter getId()
+    public int getId() {
+        return id;
+    }
+
 
     // Étape 5 : getter getNom()
+    public String getNom() {
+        return nom;
+    }
 
     // Étape 6 : setter setId()
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     // Étape 7 : setter setNom()
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
     // Étape 8 : toString() → return this.nom;
     // ⚠️ Seulement "return this.nom;" rien d'autre !
+
+
+    @Override
+    public String toString() {
+        return "Marque{" +
+                "nom='" + nom + '\'' +
+                '}';
+    }
 }

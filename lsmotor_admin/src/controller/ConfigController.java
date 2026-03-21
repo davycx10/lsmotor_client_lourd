@@ -1,7 +1,7 @@
 package controller;
 
 import model.BDD;
-import model.Config;
+import model.POJOs.Config;
 import model.VenteModel;
 import view.ConfigPanel;
 

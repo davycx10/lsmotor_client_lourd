@@ -1,7 +1,7 @@
 package controller;
 
 import model.BDD;
-import model.Utilisateur;
+import model.POJOs.Utilisateur;
 import model.UtilisateurModel;
 import view.LoginView;
 import view.MainView;
