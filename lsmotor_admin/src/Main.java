@@ -66,7 +66,7 @@ public class Main {
 
     // Paramètres de connexion BDD — à modifier selon la config
     public static final String SERVEUR = "localhost";
-    public static final String USER    = "root";
+    public static final String USER    = "adminphp";
     public static final String MDP     = "";
     public static final String BDD_NOM = "ls_motors";
 

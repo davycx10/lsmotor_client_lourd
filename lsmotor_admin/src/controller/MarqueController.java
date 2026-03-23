@@ -220,16 +220,147 @@ import java.util.List;
 public class MarqueController {
 
     // Attributs : vue + modele
+    private MarquePanel vue;
+    private MarqueModel modele;
 
     // Constructeur :
     // → Stocker attributs
     // → Brancher boutons + recherche + sélection
     // → chargerTableau()
 
+    public MarqueController(BDD uneDb,MarquePanel vue) {
+        this.vue = vue;
+        this.modele = new MarqueModel(uneDb);
+
+        vue.getBtnAjouter()
+                .addActionListener(e -> ajouter());
+        vue.getBtnModifier()
+                .addActionListener(e -> modifier());
+        vue.getBtnSupprimer()
+                .addActionListener(e -> supprimer());
+        vue.getChampRecherche()
+                .addKeyListener(
+                        new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                rechercher();
+                            }
+                        }
+                );
+        ChargerTableau();
+    }
+
     // chargerTableau()
+    private void ChargerTableau(){
+        List<Marque> liste = modele.getAll();
+        Object[][] data = new Object[liste.size()][2];
+        for (int i = 0; i < liste.size(); i++){
+            data[i][0] = liste.get(i).getId();
+            data[i][1] = liste.get(i).getNom();
+        }
+        vue.majTableau(data);
+        vue.setCompteur(liste.size());
+    }
     // rechercher()
+    private void rechercher(){
+        String terme =
+                vue.getChampRecherche().getText().trim();
+
+        List<Marque> liste;
+        if (terme.isEmpty()){
+            liste = modele.getAll();
+        } else{
+            liste = modele.rechercher(terme);
+        }
+        Object[][] data = new Object[liste.size()][2];
+        for (int i = 0; i < liste.size(); i++){
+            data[i][0] = liste.get(i).getId();
+            data[i][1] = liste.get(i).getNom();
+        }
+        vue.majTableau(data);
+        vue.setCompteur(liste.size());
+    }
     // ajouter()
+    private void ajouter(){
+        String nom = vue.getNom();
+        if (nom.isEmpty()){
+            vue.afficherErreur(
+                    "Le nom de la marque ne peut être vide"
+            );
+            return;
+        }
+        boolean ok = modele.ajouter(nom);
+        if (ok){
+            ChargerTableau();
+            vue.viderFormulaire();
+        } else {
+            vue.afficherErreur(
+                    "Cette marqe existe déjà"
+            );
+        }
+    }
     // modifier()
+    private void modifier(){
+        if (vue.getLigneSelectionnee() == -1){
+            vue.afficherErreur("Selecionner une marque à modifier");
+            return;
+        }
+        int id = (int) vue.getValeurColonne(0);
+        String nom = vue.getNom();
+        if (nom.isEmpty()){
+            vue.afficherErreur(
+                    "Le nom ne peut être vide"
+            );
+            return;
+        }
+        boolean ok = modele.modifier(id, nom);
+        if (ok){
+            ChargerTableau();
+            vue.viderFormulaire();
+        } else {
+            vue.afficherErreur("Erreur modification");
+        }
+    }
     // supprimer()
+    private void supprimer(){
+        if (vue.getLigneSelectionnee() == -1){
+            vue.afficherErreur(
+                    "Selectionner une marque à supprimer"
+            );
+            return;
+        }
+        int id = (int) vue.getValeurColonne(0);
+
+        if (modele.estUtilisee(id)){
+            vue.afficherErreur(
+                    "Impossible de supprimer: cette marque "
+                    + "est utilisée par des véhicules. "
+            );
+            return;
+        }
+        int choix = JOptionPane.showConfirmDialog(
+                vue,
+                "Supprimer cette marque ?",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        if (choix == JOptionPane.YES_NO_OPTION){
+            boolean ok = modele.supprimer(id);
+            if (ok){
+                ChargerTableau();
+                vue.viderFormulaire();
+            } else {
+                vue.afficherErreur("Erreur suppression ");
+            }
+        }
+    }
+
     // remplirFormulaire()
+    private void remplirFormulaire(){
+        int row = vue.getLigneSelectionnee();
+        if (row == -1) return;
+        String nom = (String) vue.getValeurColonne(1);
+        vue.setNom(nom);
+    }
 }
