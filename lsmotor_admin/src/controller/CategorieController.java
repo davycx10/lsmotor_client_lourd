@@ -140,16 +140,144 @@ import java.util.List;
 public class CategorieController {
 
     // Attributs : vue + modele
+    private CategoriePanel vue;
+    private CategorieModel modele;
 
     // Constructeur :
     // → Stocker attributs
     // → Brancher boutons + recherche + sélection
     // → chargerTableau()
 
+    public CategorieController(BDD uneDb, CategoriePanel vue) {
+        this.vue = vue;
+        this.modele = new CategorieModel(uneDb);
+
+        vue.getBtnAjouter()
+                .addActionListener(e -> ajouter());
+        vue.getBtnModifier()
+                .addActionListener(e -> modifier());
+        vue.getBtnSupprimer()
+                .addActionListener(e -> supprimer());
+        vue.getChampRecherche()
+                .addKeyListener(
+                        new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                rechercher();
+                            }
+                        }
+                );
+        ChargerTableau();
+    }
+
     // chargerTableau()
+    private void ChargerTableau(){
+       List<Categorie> liste = modele.getAll();
+
+       Object[][] data = new Object[liste.size()][2];
+       for (int i = 0; i < liste.size(); i++){
+           data[i][0] = liste.get(i).getId();
+           data[i][1] = liste.get(i).getLibelle();
+       }
+       vue.majTableau(data);
+    }
+
     // rechercher()
+    private void rechercher(){
+        String terme =
+                vue.getChampRecherche().getText().trim();
+
+        List<Categorie> liste;
+        if (terme.isEmpty()){
+            liste = modele.getAll();
+        } else {
+            liste = modele.rechercher(terme);
+        }
+        Object[][] data = new Object[liste.size()][2];
+        for (int i = 0; i < liste.size(); i++){
+            data[i][0] = liste.get(i).getId();
+            data[i][1] = liste.get(i).getLibelle();
+        }
+        vue.majTableau(data);
+    }
     // ajouter()
+    private void ajouter(){
+        String libelle = vue.getLibelle();
+
+        if (libelle.isEmpty()){
+            vue.afficherErreur(
+                    "Le libellé ne peut être vide"
+            );
+            return;
+        }
+        boolean ok = modele.ajouter(libelle);
+        if (ok){
+            ChargerTableau();
+            vue.viderFormulaire();
+        } else {
+            vue.afficherErreur(
+                    "Cette catégorie existe déjà"
+            );
+        }
+    }
     // modifier()
+    private void modifier(){
+        int id = (int) vue.getValeurColonne(0);
+        String libelle = vue.getLibelle();
+        if (modele.estUtilisee(id)){
+            vue.afficherErreur(
+                    "Le libellet ne peut être vide"
+            );
+            return;
+        }
+        boolean ok = modele.modifier(id, libelle);
+        if (ok){
+            ChargerTableau();
+            vue.viderFormulaire();
+        } else {
+            vue.afficherErreur("Erreur modification");
+        }
+    }
     // supprimer()
+    private void supprimer(){
+        if (vue.getLigneSelectionnee() == -1){
+            vue.afficherErreur(
+                    "Selectionner une categorie à supprimer"
+            );
+            return;
+        }
+
+        int id = (int) vue.getValeurColonne(0);
+        if (modele.estUtilisee(id)){
+            vue.afficherErreur(
+                    "Impossible : cette catégorie est utilisée"
+                    + "par des vehicules"
+            );
+            return;
+        }
+        int choix = JOptionPane.showConfirmDialog(
+                vue,
+                "Supprimer cette catégorie",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        if (choix == JOptionPane.YES_NO_OPTION){
+            boolean ok = modele.supprimer(id);
+            if (ok){
+                ChargerTableau();
+                vue.viderFormulaire();
+            } else {
+                vue.afficherErreur("Erreur suppression");
+            }
+        }
+    }
     // remplirFormulaire()
+    private void remplirFormulaire(){
+        int row = vue.getLigneSelectionnee();
+        if (row == -1) return;
+        String libelle = (String) vue.getValeurColonne(1);
+        vue.setLibelle(libelle);
+    }
+
 }
