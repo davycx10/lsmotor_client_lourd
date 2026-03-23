@@ -295,7 +295,7 @@ public class VehiculeController {
         vue.getBtnAjouter()
                 .addActionListener(e -> ajouter());
         vue.getBtnModifier()
-                .addActionListener(e -> modifier);
+                .addActionListener(e -> modifier());
         vue.getBtnSupprimer()
                 .addActionListener(e -> supprimer());
         vue.getChampRecherche()
@@ -314,7 +314,7 @@ public class VehiculeController {
                         remplirFormulaire();
                     }
                 });
-        chargerTaleau();
+        chargerTableau();
     }
 
     // chargerMarques()
@@ -347,14 +347,228 @@ public class VehiculeController {
             data[i][2] = v.getPrixCatalogue();
             data[i][3] = v.getNomMarque();
             data[i][4] = v.getNomCategorie();
-            data[i][5] = v.isActif() ? "Oui" : "Non"
+            data[i][5] = v.isActif() ? "Oui" : "Non";
 
         }
         vue.majTableau(data);
     }
     // rechercher()
+    public void rechercher(){
+        String terme =
+                vue.getChampRecherche().getText().trim();
+
+        List<Vehicule> liste;
+        if (terme.isEmpty()){
+            liste = modele.getAll();
+        } else {
+            liste = modele.rechercher(terme);
+        }
+        Object[][] data = new Object[liste.size()][6];
+        for (int i = 0; i < liste.size(); i++){
+            Vehicule v = liste.get(i);
+            data[i][0] = v.getId();
+            data[i][1] = v.getNomModele();
+            data[i][2] = v.getPrixCatalogue();
+            data[i][3] = v.getNomMarque();
+            data[i][4] = v.getNomCategorie();
+            data[i][5] = v.isActif() ? "Oui" : "Non";
+
+        }
+        vue.majTableau(data);
+    }
     // ajouter()
+    private void ajouter(){
+        String nom = vue.getNom();
+        String prixTxt = vue.getPrix();
+        String image = vue.getImage();
+        String desc = vue.getDescription();
+        boolean actif = vue.isActif();
+
+        Object selMarque = vue.getMarqueSelectionnee();
+        Object selCat = vue.getCategorieSelectionnee();
+
+        if (nom.isEmpty() || prixTxt.isEmpty()
+            || selMarque == null || selCat == null){
+            vue.afficherErreur(
+                    "Nom, prix, marque et categories "
+                    + "sont obligatoires"
+            );
+            return;
+        }
+        double prix;
+        try {
+            prix = Double.parseDouble(prixTxt);
+        } catch (NumberFormatException e) {
+            vue.afficherErreur(
+                    "Le prix doit être nombre valide"
+            );
+            return;
+        }
+        Marque marque = (Marque) selMarque;
+        Categorie cat = (Categorie) selCat;
+
+        Vehicule v = new Vehicule();
+        v.setNomModele(nom);
+        v.setPrixCatalogue(prix);
+        v.setIdMarque(marque.getId());
+        v.setIdCategorie(cat.getId());
+        v.setImage(image);
+        v.setDescription(desc);
+        v.setActif(actif);
+
+        boolean ok = modele.ajouter(v);
+        if (ok){
+            chargerTableau();
+            vue.viderFormulaire();
+        } else {
+            vue.afficherErreur(
+                    "Erreur ajout"
+            );
+        }
+    }
+
     // modifier()
+    private void modifier(){
+        String nom = vue.getNom();
+        String prixTxt = vue.getPrix();
+        String image = vue.getImage();
+        String desc = vue.getDescription();
+        boolean actif = vue.isActif();
+
+        if (vue.getLigneSelectionnee() == -1){
+            vue.afficherErreur(
+                    "Selectionner un vehicule à modifier"
+            );
+            return;
+        }
+        int id = (int) vue.getValeurColonne(0);
+        Object selMarque = vue.getMarqueSelectionnee();
+        Object selCat = vue.getCategorieSelectionnee();
+
+        if (nom.isEmpty() || prixTxt.isEmpty()
+                || selMarque == null || selCat == null){
+            vue.afficherErreur(
+                    "Nom, prix, marque et categories "
+                            + "sont obligatoires"
+            );
+            return;
+        }
+        double prix;
+        try {
+            prix = Double.parseDouble(prixTxt);
+        } catch (NumberFormatException e) {
+            vue.afficherErreur(
+                    "Le prix doit être nombre valide"
+            );
+            return;
+        }
+        Marque marque = (Marque) selMarque;
+        Categorie cat = (Categorie) selCat;
+
+        Vehicule v = new Vehicule();
+        v.setNomModele(nom);
+        v.setPrixCatalogue(prix);
+        v.setIdMarque(marque.getId());
+        v.setIdCategorie(cat.getId());
+        v.setImage(image);
+        v.setDescription(desc);
+        v.setActif(actif);
+        v.setId(id);
+
+        boolean ok = modele.modifier(v);
+        if (ok){
+            chargerTableau();
+            vue.viderFormulaire();
+        } else {
+            vue.afficherErreur(
+                    "Erreur modification"
+            );
+            return;
+        }
+
+    }
+
     // supprimer()
+    private void supprimer(){
+        if (vue.getLigneSelectionnee() == -1){
+            vue.afficherErreur(
+                    "Selectionner un vehicule à supprimer"
+            );
+            return;
+        }
+        int id = (int) vue.getValeurColonne(0);
+        if (modele.estUtilise(id)){
+            vue.afficherErreur(
+                    "Impossible a supprimer"
+            );
+            return;
+        }
+        int choix = JOptionPane.showConfirmDialog(
+                vue,
+                "Supprimer ce véhicule ?",
+                "Confirmation",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        if (choix == JOptionPane.YES_NO_OPTION){
+            boolean ok = modele.supprimer(id);
+            if (ok){
+                chargerTableau();
+                vue.viderFormulaire();
+            } else {
+                vue.afficherErreur(
+                        "Erreur suppression"
+                );
+            }
+        }
+    }
     // remplirFormulaire()
+    private void remplirFormulaire(){
+        int row = vue.getLigneSelectionnee();
+        if (row == -1) return;
+
+        String nom = (String) vue.getValeurColonne(1);
+        String prix = String.valueOf(vue.getValeurColonne(2));
+
+        int idVehicule = (int) vue.getValeurColonne(0);
+
+        List<Vehicule> liste = modele.getAll();
+        Vehicule trouve = null;
+        for (Vehicule v : liste){
+            if (v.getId() == idVehicule){
+                trouve = v;
+                break;
+            }
+        }
+        if (trouve == null) return;
+
+        int idxMarque = -1;
+        JComboBox<Object> comboM = vue.getComboMarque();
+        for (int i = 0; i < comboM.getItemCount(); i++){
+            Marque m = (Marque)  comboM.getItemAt(i);
+            if (m.getId() == trouve.getIdMarque()){
+                idxMarque = 1;
+                break;
+            }
+        }
+        int idxCat = -1;
+        JComboBox<Object> comboC = vue.getComboCategorie();
+        for (int i =0; i < comboC.getItemCount(); i++){
+            Categorie c = (Categorie) comboC.getItemAt(i);
+            if (c.getId() == trouve.getIdCategorie()){
+                idxCat = 1;
+                break;
+            }
+        }
+        vue.remplirFormulaire(
+                trouve.getNomModele(),
+                String.valueOf(trouve.getPrixCatalogue()),
+                trouve.getImage(),
+                trouve.getDescription(),
+                trouve.isActif(),
+                idxMarque,
+                idxCat
+        );
+    }
+
 }
