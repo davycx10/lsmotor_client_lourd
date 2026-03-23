@@ -1,6 +1,9 @@
 package controller;
 
 import model.*;
+import model.POJOs.Categorie;
+import model.POJOs.Marque;
+import model.POJOs.Vehicule;
 import view.VehiculePanel;
 
 import javax.swing.*;
@@ -276,16 +279,79 @@ import java.util.List;
 public class VehiculeController {
 
     // Attributs : vue + 3 modèles
+    private VehiculePanel vue;
+    private VehiculeModel modele;
+    private MarqueModel marqueModel;
+    private CategorieModel categorieModel;
 
     // Constructeur :
-    // → Stocker attributs
-    // → chargerMarques() + chargerCategories() EN PREMIER
-    // → Brancher boutons + recherche + sélection
-    // → chargerTableau()
+
+    public VehiculeController(BDD uneDb, VehiculePanel vue) {
+        this.vue = vue;
+        this.modele = new VehiculeModel(uneDb);
+        this.marqueModel = new MarqueModel(uneDb);
+        this.categorieModel = new CategorieModel(uneDb);
+
+        vue.getBtnAjouter()
+                .addActionListener(e -> ajouter());
+        vue.getBtnModifier()
+                .addActionListener(e -> modifier);
+        vue.getBtnSupprimer()
+                .addActionListener(e -> supprimer());
+        vue.getChampRecherche()
+                .addKeyListener(
+                        new KeyAdapter() {
+                            @Override
+                            public void keyReleased(KeyEvent e) {
+                                rechercher();
+                            }
+                        }
+                );
+        vue.getTable()
+                .getSelectionModel()
+                .addListSelectionListener(e -> {
+                    if (!e.getValueIsAdjusting()) {
+                        remplirFormulaire();
+                    }
+                });
+        chargerTaleau();
+    }
 
     // chargerMarques()
+    private void chargerMarques(){
+        vue.getComboMarque().removeAllItems();
+
+        List<Marque> marques = marqueModel.getAll();
+        for (Marque m : marques){
+            vue.getComboMarque().addItem(m);
+        }
+    }
     // chargerCategories()
+    private void chargerCategories(){
+        vue.getComboCategorie().removeAllItems();
+
+        List<Categorie> cats = categorieModel.getAll();
+        for (Categorie c :cats){
+            vue.getComboCategorie().addItem(c);
+        }
+    }
     // chargerTableau()
+    private void chargerTableau(){
+        List<Vehicule> liste = modele.getAll();
+
+        Object[][] data = new Object[liste.size()][6];
+        for (int i = 0; i < liste.size(); i++){
+            Vehicule v = liste.get(i);
+            data[i][0] = v.getId();
+            data[i][1] = v.getNomModele();
+            data[i][2] = v.getPrixCatalogue();
+            data[i][3] = v.getNomMarque();
+            data[i][4] = v.getNomCategorie();
+            data[i][5] = v.isActif() ? "Oui" : "Non"
+
+        }
+        vue.majTableau(data);
+    }
     // rechercher()
     // ajouter()
     // modifier()
