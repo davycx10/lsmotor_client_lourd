@@ -120,35 +120,38 @@ public class LoginView extends JFrame {
 
         // ── Logo ──────────────────────────────────────────────
         // ⚠️ POUR UTILISER L'IMAGE :
-        // ImageIcon icon = new ImageIcon("CHEMIN_COMPLET/assets/logo_wide.png");
-        // Image scaled = icon.getImage().getScaledInstance(200, 80, Image.SCALE_SMOOTH);
-        // JLabel lblLogo = new JLabel(new ImageIcon(scaled));
-        // lblLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
-        // panel.add(lblLogo);
+        ImageIcon icon = new ImageIcon(
+                getClass().getResource("/resources/logo_wide.png")
+        );
+
+        Image scaled = icon.getImage().getScaledInstance(350, 160, Image.SCALE_SMOOTH);
+        JLabel lblLogo = new JLabel(new ImageIcon(scaled));
+        lblLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
+        panel.add(lblLogo);
         // ─────────────────────────────────────────────────────
 
         // Texte logo (si pas d'image)
-        JLabel lblLS = new JLabel("LS");
-        lblLS.setFont(new Font("Segoe UI", Font.BOLD, 52));
-        lblLS.setForeground(Theme.GOLD);
-        lblLS.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // JLabel lblLS = new JLabel("LS");
+        // lblLS.setFont(new Font("Segoe UI", Font.BOLD, 52));
+        // lblLS.setForeground(Theme.GOLD);
+        //lblLS.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel lblMotors = new JLabel("MOTORS");
-        lblMotors.setFont(new Font("Segoe UI", Font.PLAIN, 32));
-        lblMotors.setForeground(Theme.TEXT_WHITE);
-        lblMotors.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // JLabel lblMotors = new JLabel("MOTORS");
+        // lblMotors.setFont(new Font("Segoe UI", Font.PLAIN, 32));
+        // lblMotors.setForeground(Theme.TEXT_WHITE);
+        // lblMotors.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        JLabel lblDealership = new JLabel("DEALERSHIP");
-        lblDealership.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        lblDealership.setForeground(Theme.TEXT_GRAY);
-        lblDealership.setAlignmentX(Component.LEFT_ALIGNMENT);
+        // JLabel lblDealership = new JLabel("DEALERSHIP");
+        // lblDealership.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        // lblDealership.setForeground(Theme.TEXT_GRAY);
+        // lblDealership.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        panel.add(Box.createVerticalGlue());
-        panel.add(lblLS);
-        panel.add(lblMotors);
-        panel.add(Box.createRigidArea(new Dimension(0, 6)));
-        panel.add(lblDealership);
-        panel.add(Box.createRigidArea(new Dimension(0, 40)));
+        // panel.add(Box.createVerticalGlue());
+        // panel.add(lblLS);
+        // panel.add(lblMotors);
+        // panel.add(Box.createRigidArea(new Dimension(0, 6)));
+        // panel.add(lblDealership);
+        // panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
         // Ligne décorative dorée
         JPanel ligne = new JPanel();

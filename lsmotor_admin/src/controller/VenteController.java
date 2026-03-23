@@ -73,11 +73,36 @@ import java.util.List;
 public class VenteController {
 
     // Attributs : vue + modele
+    private VentePanel vue;
+    private VenteModel modele;
 
     // Constructeur :
     // → Stocker attributs
     // → Brancher btnRafraichir → charger()
     // → charger()
 
+    public VenteController(BDD uneDb, VentePanel vue) {
+        this.vue = vue;
+        this.modele =new VenteModel(uneDb);
+
+        vue.getBtnRafraichir()
+                .addActionListener(e -> charger());
+        charger();
+    }
+
     // charger()
+    private void charger(){
+        List<Object[]> employe = modele.getAllParEmploye();
+        Object[][] dataEmploye =
+                employe.toArray(new Object[0][]);
+        vue.majTableauEmploye(dataEmploye);
+
+        double total = modele.getTotalSemaineCourante();
+        vue.setTotalSemaine(
+                String.format("%, .0f", total)
+        );
+
+        int nb = modele.getNbVentesSemaineCourante();
+        vue.setNbVentes(nb);
+    }
 }

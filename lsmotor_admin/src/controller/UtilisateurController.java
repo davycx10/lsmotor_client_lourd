@@ -53,7 +53,7 @@ public class UtilisateurController {
     // ============================================================
     //  chargerTableau()
     // ============================================================
-    // ✅ Méthode séparée → réutilisable après chaque modification
+    // Méthode séparée → réutilisable après chaque modification
     private void chargerTableau() {
         List<Utilisateur> liste = modele.getAll();
 

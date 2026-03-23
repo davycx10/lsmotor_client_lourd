@@ -4,6 +4,10 @@ import model.BDD;
 import model.POJOs.Config;
 import model.VenteModel;
 import view.ConfigPanel;
+import view.CategoriePanel;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * ============================================================
@@ -122,6 +126,9 @@ import view.ConfigPanel;
 public class ConfigController {
 
     // Attributs : vue + modele
+    private ConfigPanel vue;
+    private VenteModel modele;
+
 
     // Constructeur :
     // → Stocker attributs
@@ -129,6 +136,65 @@ public class ConfigController {
     // → Brancher btnEnregistrer → sauvegarderMarge()
     // → chargerMarge()
 
+    public ConfigController(BDD uneDb, ConfigPanel vue) {
+        this.vue = vue;
+        this.modele = new VenteModel(uneDb);
+
+        vue.getBtnCharger()
+                .addActionListener(e -> chargerMarge());
+        vue.getBtnEnregistrer()
+                .addActionListener(e -> sauvegarderMarge());
+
+    }
+
+
     // chargerMarge()
+    private void chargerMarge(){
+        Config config = modele.getMarge();
+
+        if (config != null){
+            vue.setMarge(config.getMargePourcent());
+            vue.setDateMaj(config.getDateMaj());
+            vue.effacerStatut();
+        } else {
+            vue.afficherStatut(
+                    "Impossible decharger la configuration",
+                    false
+            );
+        }
+    }
     // sauvegarderMarge()
+    private void sauvegarderMarge(){
+        String txt = vue.getMargeTexte();
+        double valeur;
+        try {
+            valeur = Double.parseDouble(txt);
+        } catch (Exception e) {
+            vue.afficherStatut(
+                    "Entrer un nombre valide (ex: 40.00",
+                    false
+            );
+            return;
+        }
+        if (valeur < 0 ||valeur > 200){
+            vue.afficherStatut(
+                    "La marge doit être entre 0 et 200",
+                    false
+            );
+            return;
+        }
+        boolean ok = modele.saveMarge(valeur);
+        if (ok){
+            vue.afficherStatut(
+                    "Marge enregistée avec succès",
+                    true
+            );
+            chargerMarge();
+        } else {
+            vue.afficherStatut(
+                    "Errer lors de l'enregistrement",
+                    false
+            );
+        }
+    }
 }
