@@ -399,11 +399,11 @@ public class ConfigPanel extends JPanel {
         carte.add(Box.createRigidArea(new Dimension(0, 8)));
         carte.add(creerLigneInfo(
             "Développé par",
-            "Dave ISRAEL · Youssef BOUMILK · Noah MILLOT · Théo DORIVAL"
+            "Nyght"
         ));
         carte.add(Box.createRigidArea(new Dimension(0, 8)));
         carte.add(creerLigneInfo(
-            "Formation", "BTS SIO SLAM — NYT (Nyght)"
+            "Entreprise", "Nyght"
         ));
 
         return carte;

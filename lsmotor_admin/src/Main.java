@@ -66,8 +66,8 @@ public class Main {
 
     // Paramètres de connexion BDD — à modifier selon la config
     public static final String SERVEUR = "localhost";
-    public static final String USER    = "adminphp";
-    public static final String MDP     = "";
+    public static final String USER    = "admin";
+    public static final String MDP     = "admin123";
     public static final String BDD_NOM = "ls_motors";
 
     public static void main(String[] args) {
@@ -95,7 +95,7 @@ public class Main {
             LoginView loginView = new LoginView();
 
             // 4. Créer le controller
-            // new LoginController(db, loginView);
+            new LoginController(db, loginView);
 
             // 5. Afficher la fenêtre
             loginView.setVisible(true);
