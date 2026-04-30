@@ -197,14 +197,12 @@ public class MainView extends JFrame {
      */
     private void initialiserControllers() {
 
-        // ➡️ Décommente quand tes controllers sont prêts :
-
-        // new controller.UtilisateurController(db, utilisateurPanel);
-        // new controller.CategorieController(db, categoriePanel);
-        // new controller.MarqueController(db, marquePanel);
-        // new controller.VehiculeController(db, vehiculePanel);
-        // new controller.VenteController(db, ventePanel);
-        // new controller.ConfigController(db, configPanel);
+        new controller.UtilisateurController(db, utilisateurPanel);
+        new controller.CategorieController(db, categoriePanel);
+        new controller.MarqueController(db, marquePanel);
+        new controller.VehiculeController(db, vehiculePanel);
+        new controller.VenteController(db, ventePanel);
+        new controller.ConfigController(db, configPanel);
 
     }
 
