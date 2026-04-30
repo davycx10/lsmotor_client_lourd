@@ -378,8 +378,8 @@ public class DashboardPanel extends JPanel {
         lblDesc.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         JLabel lblAuteurs = new JLabel(
-            "Développé par Dave ISRAEL · Youssef BOUMILK"
-          + " · Noah MILLOT · Théo DORIVAL — NYT (Nyght) — BTS SIO SLAM"
+            "Développé par Nyght"
+
         );
         lblAuteurs.setFont(new Font("Segoe UI", Font.ITALIC, 10));
         lblAuteurs.setForeground(new Color(0x44, 0x44, 0x55));

@@ -39,8 +39,8 @@ public class HeaderPanel extends JPanel {
     private char initiale = 'A';
 
     /**
-     * @param prenom Prénom de l'utilisateur connecté (ex: "Dave")
-     * @param nom    Nom de l'utilisateur connecté    (ex: "ISRAEL")
+     * @param prenom Prénom de l'utilisateur connecté (ex: "Admin1")
+     * @param nom    Nom de l'utilisateur connecté    (ex: "admin")
      */
     public HeaderPanel(String prenom, String nom) {
         configurerPanel();
@@ -190,7 +190,7 @@ public class HeaderPanel extends JPanel {
     /**
      * Crée un rond doré avec l'initiale de l'utilisateur.
      * Dessiné à la main avec Graphics2D (pas d'image nécessaire).
-     * @param lettre L'initiale à afficher (ex: 'D' pour Dave)
+     * @param lettre L'initiale à afficher (ex: 'A' pour Admin)
      */
     private JPanel creerAvatar(char lettre) {
         JPanel rond = new JPanel() {

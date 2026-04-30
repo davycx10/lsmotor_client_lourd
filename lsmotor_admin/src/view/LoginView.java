@@ -128,30 +128,10 @@ public class LoginView extends JFrame {
         JLabel lblLogo = new JLabel(new ImageIcon(scaled));
         lblLogo.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(lblLogo);
+
         // ─────────────────────────────────────────────────────
 
-        // Texte logo (si pas d'image)
-        // JLabel lblLS = new JLabel("LS");
-        // lblLS.setFont(new Font("Segoe UI", Font.BOLD, 52));
-        // lblLS.setForeground(Theme.GOLD);
-        //lblLS.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // JLabel lblMotors = new JLabel("MOTORS");
-        // lblMotors.setFont(new Font("Segoe UI", Font.PLAIN, 32));
-        // lblMotors.setForeground(Theme.TEXT_WHITE);
-        // lblMotors.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        // JLabel lblDealership = new JLabel("DEALERSHIP");
-        // lblDealership.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        // lblDealership.setForeground(Theme.TEXT_GRAY);
-        // lblDealership.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        // panel.add(Box.createVerticalGlue());
-        // panel.add(lblLS);
-        // panel.add(lblMotors);
-        // panel.add(Box.createRigidArea(new Dimension(0, 6)));
-        // panel.add(lblDealership);
-        // panel.add(Box.createRigidArea(new Dimension(0, 40)));
 
         // Ligne décorative dorée
         JPanel ligne = new JPanel();
@@ -171,7 +151,7 @@ public class LoginView extends JFrame {
         panel.add(Box.createVerticalGlue());
 
         // Bas de page
-        JLabel lblVersion = new JLabel("Console Admin v1.0 — BTS SIO SLAM");
+        JLabel lblVersion = new JLabel("LS MOTORS © 2026 – Concession District RP FA\n");
         lblVersion.setFont(Theme.FONT_SMALL);
         lblVersion.setForeground(new Color(0x44, 0x44, 0x55));
         lblVersion.setAlignmentX(Component.LEFT_ALIGNMENT);
