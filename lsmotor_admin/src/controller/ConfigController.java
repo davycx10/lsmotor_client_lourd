@@ -144,6 +144,8 @@ public class ConfigController {
                 .addActionListener(e -> chargerMarge());
         vue.getBtnEnregistrer()
                 .addActionListener(e -> sauvegarderMarge());
+                
+        changerMarge();
 
     }
 
