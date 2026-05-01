@@ -238,6 +238,15 @@ public class MarqueController {
                 .addActionListener(e -> modifier());
         vue.getBtnSupprimer()
                 .addActionListener(e -> supprimer());
+
+        vue.getTable()
+                .getSelectionModel()
+                .addListSelectionListener(e -> {
+                    if (!e.getValueIsAdjusting()) {
+                        remplirFormulaire();
+                    }
+                });
+                
         vue.getChampRecherche()
                 .addKeyListener(
                         new KeyAdapter() {
@@ -247,11 +256,11 @@ public class MarqueController {
                             }
                         }
                 );
-        ChargerTableau();
+        chargerTableau();
     }
 
     // chargerTableau()
-    private void ChargerTableau(){
+    private void chargerTableau(){
         List<Marque> liste = modele.getAll();
         Object[][] data = new Object[liste.size()][2];
         for (int i = 0; i < liste.size(); i++){
@@ -291,7 +300,7 @@ public class MarqueController {
         }
         boolean ok = modele.ajouter(nom);
         if (ok){
-            ChargerTableau();
+            chargerTableau();
             vue.viderFormulaire();
         } else {
             vue.afficherErreur(
@@ -315,7 +324,7 @@ public class MarqueController {
         }
         boolean ok = modele.modifier(id, nom);
         if (ok){
-            ChargerTableau();
+            chargerTableau();
             vue.viderFormulaire();
         } else {
             vue.afficherErreur("Erreur modification");
@@ -342,13 +351,13 @@ public class MarqueController {
                 vue,
                 "Supprimer cette marque ?",
                 "Confirmation",
-                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_OPTION,
                 JOptionPane.WARNING_MESSAGE
         );
-        if (choix == JOptionPane.YES_NO_OPTION){
+        if (choix == JOptionPane.YES_OPTION){
             boolean ok = modele.supprimer(id);
             if (ok){
-                ChargerTableau();
+                chargerTableau();
                 vue.viderFormulaire();
             } else {
                 vue.afficherErreur("Erreur suppression ");
