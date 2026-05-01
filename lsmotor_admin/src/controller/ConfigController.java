@@ -4,10 +4,6 @@ import model.BDD;
 import model.POJOs.Config;
 import model.VenteModel;
 import view.ConfigPanel;
-import view.CategoriePanel;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 /**
  * ============================================================
