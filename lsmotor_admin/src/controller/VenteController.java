@@ -92,14 +92,20 @@ public class VenteController {
 
     // charger()
     private void charger(){
-        List<Object[]> employe = modele.getAllParEmploye();
-        Object[][] dataEmploye =
-                employe.toArray(new Object[0][]);
-        vue.majTableauEmploye(dataEmploye);
+        List<Object[]> global = modele.getAllGlobal();
+        vue.majTableauGlobal(
+                global.toArray(new Object[0][])
+        );
+
+        List<Oject[]> employe = modele.getAllParEmploye();
+        vue.majTableauEmploye(
+                employe.toArray(new Object[0][])
+        );
+        
 
         double total = modele.getTotalSemaineCourante();
         vue.setTotalSemaine(
-                String.format("%, .0f", total)
+                String.format("%,.0f", total)
         );
 
         int nb = modele.getNbVentesSemaineCourante();
