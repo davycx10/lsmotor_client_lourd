@@ -238,15 +238,6 @@ public class MarqueController {
                 .addActionListener(e -> modifier());
         vue.getBtnSupprimer()
                 .addActionListener(e -> supprimer());
-
-        vue.getTable()
-                .getSelectionModel()
-                .addListSelectionListener(e -> {
-                    if (!e.getValueIsAdjusting()) {
-                        remplirFormulaire();
-                    }
-                });
-                
         vue.getChampRecherche()
                 .addKeyListener(
                         new KeyAdapter() {
@@ -256,6 +247,13 @@ public class MarqueController {
                             }
                         }
                 );
+        vue.getTable()
+                .getSelectionModel()
+                .addListSelectionListener(e -> {
+                    if (!e.getValueIsAdjusting()) {
+                        remplirFormulaire();
+                    }
+                });
         chargerTableau();
     }
 

@@ -158,15 +158,6 @@ public class CategorieController {
                 .addActionListener(e -> modifier());
         vue.getBtnSupprimer()
                 .addActionListener(e -> supprimer());
-
-        vue.getTable()
-                .getSelectionModel()
-                .addListSelectionListener(e ->{
-                    if (!e.getValueIsAdjusting()){
-                        remplirFormulaire();
-                    }
-                });
-
         vue.getChampRecherche()
                 .addKeyListener(
                         new KeyAdapter() {
@@ -177,6 +168,13 @@ public class CategorieController {
                         }
                 );
         chargerTableau();
+        vue.getTable()
+                .getSelectionModel()
+                .addListSelectionListener(e ->{
+                    if (!e.getValueIsAdjusting()){
+                        remplirFormulaire();
+                    }
+                });
     }
 
     // chargerTableau()
