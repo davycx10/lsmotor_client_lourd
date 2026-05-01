@@ -97,7 +97,7 @@ public class VenteController {
                 global.toArray(new Object[0][])
         );
 
-        List<Oject[]> employe = modele.getAllParEmploye();
+        List<Object[]> employe = modele.getAllParEmploye();
         vue.majTableauEmploye(
                 employe.toArray(new Object[0][])
         );
