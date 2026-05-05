@@ -80,38 +80,40 @@ public class HeaderPanel extends JPanel {
         // ⚠️ POUR UTILISER LE LOGO IMAGE :
         // Remplace le bloc "Option 2" ci-dessous par :
         //
-        // ImageIcon icon = new ImageIcon("CHEMIN_COMPLET/assets/logo.png");
-        // Image scaled = icon.getImage().getScaledInstance(36, 36, Image.SCALE_SMOOTH);
-        // JLabel lblIcon = new JLabel(new ImageIcon(scaled));
-        // lblIcon.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 14));
-        // panel.add(lblIcon);
+         ImageIcon icon = new ImageIcon(
+                 getClass().getResource("/resources/logo.png")
+         );
+         Image scaled = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+         JLabel lblIcon = new JLabel(new ImageIcon(scaled));
+         lblIcon.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 14));
+         panel.add(lblIcon);
         // ─────────────────────────────────────────────────────
 
         // ── Option 2 : Logo texte (par défaut) ───────────────
         // Petit carré doré avec "LS" dedans
-        JPanel logoBox = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2 = (Graphics2D) g.create();
-                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-                                    RenderingHints.VALUE_ANTIALIAS_ON);
+        // JPanel logoBox = new JPanel() {
+         //   @Override
+         //   protected void paintComponent(Graphics g) {
+         //       super.paintComponent(g);
+         //       Graphics2D g2 = (Graphics2D) g.create();
+         //       g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+         //                           RenderingHints.VALUE_ANTIALIAS_ON);
                 // Fond or avec coins légèrement arrondis
-                g2.setColor(Theme.GOLD);
-                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 6, 6);
+         //       g2.setColor(Theme.GOLD);
+         //       g2.fillRoundRect(0, 0, getWidth(), getHeight(), 6, 6);
                 // Texte "LS" en noir au centre
-                g2.setColor(Theme.DARK_BG);
-                g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
-                FontMetrics fm = g2.getFontMetrics();
-                String txt = "LS";
-                int x = (getWidth()  - fm.stringWidth(txt)) / 2;
-                int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
-                g2.drawString(txt, x, y);
-                g2.dispose();
-            }
-        };
-        logoBox.setOpaque(false);
-        logoBox.setPreferredSize(new Dimension(36, 36));
+         //       g2.setColor(Theme.DARK_BG);
+         //       g2.setFont(new Font("Segoe UI", Font.BOLD, 14));
+         //       FontMetrics fm = g2.getFontMetrics();
+         //       String txt = "LS";
+         //       int x = (getWidth()  - fm.stringWidth(txt)) / 2;
+         //       int y = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
+         //       g2.drawString(txt, x, y);
+         //       g2.dispose();
+         //   }
+        //};
+        //logoBox.setOpaque(false);
+        //logoBox.setPreferredSize(new Dimension(36, 36));
 
         // Séparateur invisible entre logo et texte
         JPanel espacement = new JPanel();
@@ -119,9 +121,9 @@ public class HeaderPanel extends JPanel {
         espacement.setPreferredSize(new Dimension(14, 1));
 
         // "MOTORS" en blanc + taille réduite
-        JLabel lblMotors = new JLabel("MOTORS");
-        lblMotors.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        lblMotors.setForeground(Theme.TEXT_WHITE);
+        //JLabel lblMotors = new JLabel("MOTORS");
+        //lblMotors.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        //lblMotors.setForeground(Theme.TEXT_WHITE);
 
         // Séparateur vertical gris
         JLabel lblSep = new JLabel("  |  ");
@@ -133,9 +135,9 @@ public class HeaderPanel extends JPanel {
         lblConsole.setFont(Theme.FONT_SMALL);
         lblConsole.setForeground(Theme.TEXT_GRAY);
 
-        panel.add(logoBox);
+        panel.add(lblIcon);
         panel.add(espacement);
-        panel.add(lblMotors);
+        //panel.add(lblMotors);
         panel.add(lblSep);
         panel.add(lblConsole);
 

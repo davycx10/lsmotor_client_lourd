@@ -167,11 +167,18 @@ public class CategorieController {
                             }
                         }
                 );
-        ChargerTableau();
+        chargerTableau();
+        vue.getTable()
+                .getSelectionModel()
+                .addListSelectionListener(e ->{
+                    if (!e.getValueIsAdjusting()){
+                        remplirFormulaire();
+                    }
+                });
     }
 
     // chargerTableau()
-    private void ChargerTableau(){
+    private void chargerTableau(){
        List<Categorie> liste = modele.getAll();
 
        Object[][] data = new Object[liste.size()][2];
@@ -200,6 +207,7 @@ public class CategorieController {
         }
         vue.majTableau(data);
     }
+
     // ajouter()
     private void ajouter(){
         String libelle = vue.getLibelle();
@@ -212,7 +220,7 @@ public class CategorieController {
         }
         boolean ok = modele.ajouter(libelle);
         if (ok){
-            ChargerTableau();
+            chargerTableau();
             vue.viderFormulaire();
         } else {
             vue.afficherErreur(
@@ -220,11 +228,18 @@ public class CategorieController {
             );
         }
     }
+
     // modifier()
     private void modifier(){
+        if (vue.getLigneSelectionnee() == -1){
+            vue.afficherErreur(
+                    "Selectionner une categorie à modifier"
+            );
+            return;
+        }
         int id = (int) vue.getValeurColonne(0);
         String libelle = vue.getLibelle();
-        if (modele.estUtilisee(id)){
+        if (libelle.isEmpty()){
             vue.afficherErreur(
                     "Le libellet ne peut être vide"
             );
@@ -232,7 +247,7 @@ public class CategorieController {
         }
         boolean ok = modele.modifier(id, libelle);
         if (ok){
-            ChargerTableau();
+            chargerTableau();
             vue.viderFormulaire();
         } else {
             vue.afficherErreur("Erreur modification");
@@ -259,13 +274,13 @@ public class CategorieController {
                 vue,
                 "Supprimer cette catégorie",
                 "Confirmation",
-                JOptionPane.YES_NO_OPTION,
+                JOptionPane.YES_OPTION,
                 JOptionPane.WARNING_MESSAGE
         );
-        if (choix == JOptionPane.YES_NO_OPTION){
+        if (choix == JOptionPane.YES_OPTION){
             boolean ok = modele.supprimer(id);
             if (ok){
-                ChargerTableau();
+                chargerTableau();
                 vue.viderFormulaire();
             } else {
                 vue.afficherErreur("Erreur suppression");

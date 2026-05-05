@@ -1,8 +1,10 @@
 package view;
 
 import model.BDD;
+import model.POJOs.Config;
 import model.POJOs.Utilisateur;
 import model.UtilisateurModel;
+import model.VenteModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -229,6 +231,7 @@ public class MainView extends JFrame {
         switch (index) {
             case SidebarPanel.IDX_DASHBOARD:
                 cardLayout.show(panelContenu, CARD_DASHBOARD);
+                rafraichirDashboard();
                 break;
             case SidebarPanel.IDX_UTILISATEURS:
                 cardLayout.show(panelContenu, CARD_UTILISATEURS);
@@ -248,6 +251,26 @@ public class MainView extends JFrame {
             case SidebarPanel.IDX_CONFIG:
                 cardLayout.show(panelContenu, CARD_CONFIG);
                 break;
+        }
+    }
+
+    private void rafraichirDashboard(){
+        // reationventeModel temporaire pour lire les stats
+        VenteModel vm = new VenteModel(db);
+
+        dashboardPanel.setNbVehicules(
+                String.valueOf(vm.getNbVehiculesTotal())
+        );
+        dashboardPanel.setNbUtilisateurs(
+                String.valueOf(vm.getNbUtilisateursTotal())
+        );
+        dashboardPanel.setTotalVentes(
+                String.valueOf(vm.getTotalSemaineCourante())
+        );
+
+        Config config = vm.getMarge();
+        if (config != null){
+            dashboardPanel.setMarge(config.getMargePourcent() + "%");
         }
     }
 

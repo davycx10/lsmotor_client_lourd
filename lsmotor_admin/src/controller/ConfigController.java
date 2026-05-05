@@ -4,10 +4,6 @@ import model.BDD;
 import model.POJOs.Config;
 import model.VenteModel;
 import view.ConfigPanel;
-import view.CategoriePanel;
-
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 /**
  * ============================================================
@@ -144,6 +140,8 @@ public class ConfigController {
                 .addActionListener(e -> chargerMarge());
         vue.getBtnEnregistrer()
                 .addActionListener(e -> sauvegarderMarge());
+                
+        chargerMarge();
 
     }
 
