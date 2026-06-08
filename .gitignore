@@ -26,3 +26,15 @@ replay_pid*
 
 out/
 .idea/
+
+# IDE Eclipse
+.classpath
+.project
+.settings/
+
+# IntelliJ
+*.iml
+.idea/
+
+# autres
+.vscode/
