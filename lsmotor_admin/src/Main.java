@@ -1,10 +1,8 @@
+import controller.LoginController;
+import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import model.BDD;
 import view.LoginView;
-import controller.LoginController;
-
-import javax.swing.SwingUtilities;
-import javax.swing.JOptionPane;
-import java.sql.*;
 
 /**
  * ============================================================
@@ -65,9 +63,14 @@ import java.sql.*;
 public class Main {
 
     // Paramètres de connexion BDD — à modifier selon la config
-    public static final String SERVEUR = "192.168.234.130";
-    public static final String USER    = "admin";
-    public static final String MDP     = "admin123";
+    //public static final String SERVEUR = "192.168.234.130";
+    //public static final String USER    = "admin";
+    //public static final String MDP     = "admin123";
+    //public static final String BDD_NOM = "ls_motors";
+
+    public static final String SERVEUR = "localhost:3307";
+    public static final String USER    = "root";
+    public static final String MDP     = "";
     public static final String BDD_NOM = "ls_motors";
 
     public static void main(String[] args) {
