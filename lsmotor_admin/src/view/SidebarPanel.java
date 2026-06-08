@@ -105,7 +105,7 @@ public class SidebarPanel extends JPanel {
         ajouterItem("⊞", "Tableau de bord",    IDX_DASHBOARD);
         ajouterItem("◉", "Utilisateurs",        IDX_UTILISATEURS);
         ajouterItem("◈", "Catégories",          IDX_CATEGORIES);
-        ajouterItem("◇", "Marques",             IDX_MARQUES);
+        //ajouterItem("◇", "Marques",             IDX_MARQUES);
         ajouterItem("◆", "Véhicules",           IDX_VEHICULES);
         ajouterItem("▣", "Historique ventes",   IDX_VENTES);
         ajouterItem("⊙", "Configuration",       IDX_CONFIG);

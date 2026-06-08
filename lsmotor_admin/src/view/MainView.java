@@ -239,9 +239,9 @@ public class MainView extends JFrame {
             case SidebarPanel.IDX_CATEGORIES:
                 cardLayout.show(panelContenu, CARD_CATEGORIES);
                 break;
-            case SidebarPanel.IDX_MARQUES:
-                cardLayout.show(panelContenu, CARD_MARQUES);
-                break;
+            //case SidebarPanel.IDX_MARQUES:
+                //cardLayout.show(panelContenu, CARD_MARQUES);
+                //break;
             case SidebarPanel.IDX_VEHICULES:
                 cardLayout.show(panelContenu, CARD_VEHICULES);
                 break;

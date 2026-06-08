@@ -465,6 +465,87 @@ les fichiers Views sont terminés !
 Voici le récapitulatif complet de ce qui a été donné :
 #FichierRôle1Theme.javaCouleurs, polices, méthodes de style2LoginView.javaÉcran de connexion (2 colonnes)3HeaderPanel.javaBarre fixe du haut4SidebarPanel.javaNavigation latérale5MainView.javaFenêtre principale + CardLayout6DashboardPanel.javaTableau de bord avec cartes stats7BaseCrudPanel.javaBase réutilisable (tableau + recherche)8UtilisateurPanel.javaCRUD utilisateurs9CategoriePanel.javaCRUD catégories10MarquePanel.javaCRUD marques11VehiculePanel.javaCRUD véhicules (le plus complet)12VentePanel.javaHistorique ventes (lecture seule)13ConfigPanel.javaMarge globale
 
+Ah, parfait ! Puisqu'il s'agit d'un onglet (un JTabbedPane),
+ c'est tout à fait normal que setVisible(false) sur le MarquePanel ne fonctionne pas comme tu le souhaites
+.Dans Swing, le JTabbedPane gère lui-même l'affichage de ses onglets (l'en-tête avec le texte "Marques").
+ Si tu caches le contenu (le panel), Swing laisse l'onglet visible mais vide
+.Pour cacher l'onglet sans détruire ton objet (pour pouvoir le réutiliser et le remettre exactement au même endroit plus tard),
+ voici les deux meilleures solutions :Solution 1 :
+ Retirer et réinsérer l'onglet (La méthode standard)C'est la méthode la plus propre.
+ Tu enlèves le panneau du système d'onglets, mais tu gardes l'objet en mémoire dans ton code
+.Dans la classe qui gère tes onglets (par exemple ta MainFrame ou ton NavigationController) :
+
+-------------------------------------------------------------------------------
+
+Pour cacher l'onglet **Marque** de l'affichage sans supprimer le code, les variables ou les fonctionnalités sous-jacentes, il faut agir à deux endroits stratégiques de ta structure :
+
+1. **Empêcher l'accès visuel** en retirant le bouton/item du menu dans `SidebarPanel`.
+2. **Masquer le panneau** de la navigation par défaut (pour éviter qu'on tombe dessus par erreur).
+
+Voici la méthode propre, étape par étape :
+
+---
+
+### Étape 1 : Modifier le `SidebarPanel` (Le plus important)
+
+C'est dans la classe `SidebarPanel` (que tu n'as pas postée, mais qui gère le menu de gauche) que se trouve la liste des boutons.
+
+* Ouvre `SidebarPanel.java`.
+* Cherche l'endroit où les boutons sont ajoutés graphiquement au panneau (souvent dans un constructeur ou une méthode `construireUI()`).
+* **Commente simplement** la ligne qui ajoute le bouton de l'onglet Marque au layout.
+
+*Exemple de ce que tu devrais chercher et commenter :*
+
+```java
+// Dans SidebarPanel.java
+// add(btnDashboard);
+// add(btnUtilisateurs);
+// add(btnMarques); <-- COMMENTE CETTE LIGNE SEULEMENT
+
+```
+
+En faisant cela, l'élément disparaît visuellement du menu de gauche, mais toute la logique reste intacte dans ton code.
+
+---
+
+### Étape 2 : Sécuriser la navigation dans `MainView.java`
+
+Dans le code de ta `MainView` actuelle, le panneau existe toujours dans le `CardLayout`. C'est une bonne chose (ça t'évite de tout casser). Cependant, par sécurité, tu peux bloquer l'accès à son index dans le système de navigation.
+
+Dans la méthode `afficherPanel(int index)`, commente le comportement du `case` de la marque pour qu'il ne fasse rien si jamais cet index est appelé par erreur (par exemple, depuis un bouton du Dashboard) :
+
+```java
+public void afficherPanel(int index) {
+    sidebar.setItemActif(index);
+
+    switch (index) {
+        case SidebarPanel.IDX_DASHBOARD:
+            cardLayout.show(panelContenu, CARD_DASHBOARD);
+            rafraichirDashboard();
+            break;
+        // ... tes autres cases ...
+        
+        case SidebarPanel.IDX_MARQUES:
+            // COMMENTE LES LIGNES CI-DESSOUS POUR BLOQUER L'AFFICHAGE :
+            // cardLayout.show(panelContenu, CARD_MARQUES);
+            // break;
+            
+            // REDIRIGE PLUTÔT VERS LE DASHBOARD PAR SÉCURITÉ :
+            cardLayout.show(panelContenu, CARD_DASHBOARD);
+            break;
+            
+        // ... tes autres cases ...
+    }
+}
+
+```
+
+---
+
+### Pourquoi cette méthode est la meilleure ?
+
+* **Aucun bug de compilation :** Ton `MarqueController` reçoit toujours son `marquePanel` lors de l'initialisation dans `initialiserControllers()`. Le programme ne plantera pas.
+* **Réversible en 2 secondes :** Le jour où tu veux réafficher l'onglet, il te suffit de décommenter la ligne dans `SidebarPanel` et de restaurer le `case` dans `MainView`.
 
 
 
