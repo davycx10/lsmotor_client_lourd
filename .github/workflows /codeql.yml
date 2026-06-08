@@ -43,7 +43,7 @@ jobs:
         uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
-          build-mode: none
+          build-mode: manual
 
       - name: Manual Java build
         run: |
