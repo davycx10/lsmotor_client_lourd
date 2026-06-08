@@ -1,4 +1,7 @@
 {
   "java.import.maven.offline.enabled": false,
-  "java.configuration.updateBuildConfiguration": "automatic"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "java.project.referencedLibraries": [
+    "lib/mysql-connector-j-9.7.0.jar"
+  ]
 }
